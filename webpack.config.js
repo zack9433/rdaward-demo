@@ -17,7 +17,6 @@ var config = {
   resolve: {
     root: [bowerRoot, nodeRoot],
     alias: {
-      'angular-ui-router': bowerRoot + '/angular-ui-router/release/angular-ui-router.js',
       'bootstrap': bowerRoot + '/bootstrap/dist/css/bootstrap.min.css'
     },
     extensions: ['', '.js', '.json', 'html', 'scss', 'css']
@@ -70,6 +69,7 @@ if ('development' === NODE_ENV) {
     'webapp': [
       'webpack/hot/dev-server',
       'webpack-dev-server/client?http://' + config.ip + ':' + config.port,
+      bowerRoot + '/angular/angular.js',
       './app.js'
     ]
   };

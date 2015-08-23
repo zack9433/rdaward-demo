@@ -4,19 +4,23 @@ var path = require('path');
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var bourbon = require('node-bourbon').includePaths;
-var NODE_ENV = process.env.NODE_ENV;
 var bowerRoot = path.join(__dirname, 'bower_components');
 var nodeRoot = path.join(__dirname, 'node_modules');
 var appRoot = path.join(__dirname, 'app');
+var NODE_ENV = process.env.NODE_ENV;
 var config = {
   context: appRoot,
   output: {
-    path: path.resolve(__dirname, 'dist'),
-    filename: 'bundle.[name].js'
+    path: path.resolve(__dirname, 'build'),
+    filename: 'bundle.js',
+    // Everything related to Webpack should go through a build path,
+    // localhost:3000/build. That makes proxying easier to handle
+    publicPath: '/build/'
   },
   resolve: {
     root: [bowerRoot, nodeRoot],
     alias: {
+      'socket.io-client': bowerRoot + '/socket.io-client/socket.io.js',
       'bootstrap': bowerRoot + '/bootstrap/dist/css/bootstrap.min.css'
     },
     extensions: ['', '.js', '.json', 'html', 'scss', 'css']
@@ -25,9 +29,9 @@ var config = {
     root: nodeRoot
   },
   module: {
-    preLoaders: [
-      {test: /\.js$/, loader: "eslint", exclude: /(node_modules|bower_components)/}
-    ],
+    // preLoaders: [
+      // {test: /\.js$/, loader: "eslint", exclude: /(node_modules|bower_components)/}
+    // ],
     loaders: [
       {test: /\.js$/, loader: 'ng-annotate!babel', exclude: /(node_modules|bower_components)/},
       {test: /\.html$/, loader: 'ng-cache?prefix=[dir]/[dir]', exclude: /(node_modules|bower_components)/},
@@ -40,7 +44,8 @@ var config = {
       {test: /\.svg$/, loader: "file"}
     ],
     noParse: [
-      /angular*/
+      /angular*/,
+      /socket.io/
     ]
   },
   plugins: [
@@ -67,21 +72,21 @@ if ('development' === NODE_ENV) {
   config.devtool = 'source-map';
   config.entry = {
     'webapp': [
+      // For hot style updates
       'webpack/hot/dev-server',
+      // The script refreshing the browser on none hot updates
       'webpack-dev-server/client?http://' + config.ip + ':' + config.port,
       bowerRoot + '/angular/angular.js',
       './app.js'
     ]
   };
-  // config.postLoaders = [
-  // ];
   config.plugins.push(
-    new webpack.HotModuleReplacementPlugin(),
-    new HtmlWebpackPlugin({
-      template: 'app/index.html',
-      inject: 'body',
-      hash: true
-    })
+    new webpack.HotModuleReplacementPlugin()
+    // new HtmlWebpackPlugin({
+      // template: 'app/index.html',
+      // inject: 'body',
+      // hash: true
+    // })
   );
 }
 

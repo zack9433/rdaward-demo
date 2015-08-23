@@ -4,7 +4,7 @@
   "description": "For MOXA rdaward demo",
   "scripts": {
     "test": "NODE_ENV=test karma start",
-    "start": "NODE_ENV=development node dev-server",
+    "start": "NODE_ENV=development node server",
     "build": "rm -rf dist && NODE_ENV=production webpack --dispaly-modules"
   },
   "repository": {
@@ -46,5 +46,11 @@
     "url-loader": "~0.5.6",
     "webpack": "~1.11.0",
     "webpack-dev-server": "~1.10.1"
+  },
+  "dependencies": {
+    "chokidar": "~1.0.5",
+    "express": "~4.13.3",
+    "http-proxy": "~1.11.1",
+    "socket.io": "~1.3.6"
   }
 }

@@ -1,11 +1,10 @@
 // Vendors
 import 'bootstrap';
-// import io from 'socket.io-client';
 import 'angular-ui-router';
-// import 'angular-socket-io';
+import 'angular-socket-io';
 import 'oclazyload';
 // Routes
-import homeConfig from './routes/home.config';
+import Routes from './routes';
 // Componetns
 import './components/hello-world';
 // Common module
@@ -21,13 +20,10 @@ var app = angular.module('webapp', [
   'webapp.navbar'
 ]);
 
+Routes(app);
 Utils(app);
 
-app.config(($stateProvider, $urlRouterProvider) => {
-  $stateProvider.state('home', homeConfig);
-  $urlRouterProvider.otherwise('/');
-});
-
-app.run(($ocLazyLoad, socketService) => {
-  // $ocLazyLoad.load('dist/bundle.template-generator.js');
-});
+// app.config(($stateProvider, $urlRouterProvider) => {
+  // $stateProvider.state('home', homeConfig);
+  // $urlRouterProvider.otherwise('/');
+// });

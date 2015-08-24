@@ -10,6 +10,8 @@ import homeConfig from './routes/home.config';
 import './components/hello-world';
 // Common module
 import './common/navbar';
+// Utils
+import Utils from './utils';
 
 var app = angular.module('webapp', [
   'ui.router',
@@ -19,8 +21,7 @@ var app = angular.module('webapp', [
   'webapp.navbar'
 ]);
 
-// Utils
-require('./utils')(app);
+Utils(app);
 
 app.config(($stateProvider, $urlRouterProvider) => {
   $stateProvider.state('home', homeConfig);
@@ -30,14 +31,3 @@ app.config(($stateProvider, $urlRouterProvider) => {
 app.run(($ocLazyLoad, socketService) => {
   // $ocLazyLoad.load('dist/bundle.template-generator.js');
 });
-
-// .service('webappSocket', (socketFactory) => {
-  // var ioSocket = io.connect();
-  // var socket = socketFactory({
-    // ioSocket: ioSocket
-  // });
-  // socket.on('addDir', function(msg) {
-    // console.log('add dir', JSON.parse(msg));
-  // });
-  // return socket;
-// });

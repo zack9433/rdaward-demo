@@ -5,25 +5,17 @@ import 'angular-socket-io';
 import 'oclazyload';
 // Routes
 import Routes from './routes';
-// Componetns
-import './components/hello-world';
 // Common module
-import './common/navbar';
+import CommonModule from './common';
 // Utils
 import Utils from './utils';
 
 var app = angular.module('webapp', [
   'ui.router',
   'oc.lazyLoad',
-  'btford.socket-io',
-  'webapp.hello-world',
-  'webapp.navbar'
+  'btford.socket-io'
 ]);
 
 Routes(app);
+CommonModule(app);
 Utils(app);
-
-// app.config(($stateProvider, $urlRouterProvider) => {
-  // $stateProvider.state('home', homeConfig);
-  // $urlRouterProvider.otherwise('/');
-// });
